@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.the4me.pizzariadosmelhores.model.Cliente;
 import com.the4me.pizzariadosmelhores.service.ClienteServiceImpl;
+import com.the4me.pizzariadosmelhores.shared.ClienteDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,22 +26,23 @@ public class ClienteController {
     ClienteServiceImpl servicoCliente;
 
     @GetMapping
-    public ResponseEntity<List<Cliente>> obterTodos(){
+    public ResponseEntity<List<ClienteDTO>> obterTodos(){
        return new ResponseEntity<>(servicoCliente.obterTodos(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> obterPorId(@PathVariable String id){
+    public ResponseEntity<ClienteDTO> obterPorId(@PathVariable String id){
         /**
          * O @PathVariable pega o id que vem na url e transforma em uma variável ID do tipo String
          */
-        Cliente cliente =  servicoCliente.obterPorId(id);
-        return new ResponseEntity<>(cliente, HttpStatus.OK);
+        ClienteDTO clienteDto = servicoCliente.obterPorId(id);
+
+        return new ResponseEntity<>(clienteDto, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Cliente> adicionar(@RequestBody Cliente cliente){
-        Cliente clienteCadastrado = servicoCliente.adicionar(cliente);
+    public ResponseEntity<ClienteDTO> adicionar(@RequestBody ClienteDTO clienteDto){
+        ClienteDTO clienteCadastrado = servicoCliente.adicionar(clienteDto);
         
         return new ResponseEntity<>(clienteCadastrado, HttpStatus.CREATED);
     }
