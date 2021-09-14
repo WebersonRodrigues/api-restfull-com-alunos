@@ -6,6 +6,8 @@ import com.the4me.pizzariadosmelhores.model.Cliente;
 import com.the4me.pizzariadosmelhores.service.ClienteServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,34 +25,40 @@ public class ClienteController {
     ClienteServiceImpl servicoCliente;
 
     @GetMapping
-    public List<Cliente> obterTodos(){
-       return servicoCliente.obterTodos();
+    public ResponseEntity<List<Cliente>> obterTodos(){
+       return new ResponseEntity<>(servicoCliente.obterTodos(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public Cliente obterPorId(@PathVariable String id){
+    public ResponseEntity<Cliente> obterPorId(@PathVariable String id){
         /**
          * O @PathVariable pega o id que vem na url e transforma em uma variável ID do tipo String
          */
-        return servicoCliente.obterPorId(id);
+        Cliente cliente =  servicoCliente.obterPorId(id);
+        return new ResponseEntity<>(cliente, HttpStatus.OK);
     }
 
     @PostMapping
-    public Cliente adicionar(@RequestBody Cliente cliente){
-        return servicoCliente.adicionar(cliente);
+    public ResponseEntity<Cliente> adicionar(@RequestBody Cliente cliente){
+        Cliente clienteCadastrado = servicoCliente.adicionar(cliente);
+        
+        return new ResponseEntity<>(clienteCadastrado, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public void deletar(@PathVariable String id){
+    public ResponseEntity<?> deletar(@PathVariable String id){
         servicoCliente.deletar(id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/{id}")
-    public Cliente atualizar(
+    public ResponseEntity<Cliente> atualizar(
         @PathVariable String id, 
         @RequestBody Cliente cliente){
             
-        return servicoCliente.atualizar(id, cliente);
+        Cliente clienteAtualizado = servicoCliente.atualizar(id, cliente);
+        return new ResponseEntity<>(clienteAtualizado, HttpStatus.OK);
     }
 
     /**

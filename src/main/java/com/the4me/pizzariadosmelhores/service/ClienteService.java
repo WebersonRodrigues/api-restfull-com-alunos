@@ -3,14 +3,15 @@ package com.the4me.pizzariadosmelhores.service;
 import java.util.List;
 
 import com.the4me.pizzariadosmelhores.model.Cliente;
+import com.the4me.pizzariadosmelhores.shared.ClienteDTO;
 
 public interface ClienteService {
 
-    List<Cliente> obterTodos();
+    List<ClienteDTO> obterTodos();
 
-    Cliente obterPorId(String idCliente);
+    ClienteDTO obterPorId(String idCliente);
 
-    Cliente adicionar(Cliente cliente);
+    ClienteDTO adicionar(ClienteDTO cliente);
     
     Cliente atualizar(String idCliente, Cliente cliente);
 

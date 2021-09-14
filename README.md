@@ -11,3 +11,13 @@ Fornecedor
 2° Repository OK
 3° Service OK
 4° Controller
+
+DTO - Data Transfer Object
+
+
+(POST) - Usuario: login, senha
+UsuarioRequest
+
+(GET) - Usuario: login
+UsuarioResponse
+
